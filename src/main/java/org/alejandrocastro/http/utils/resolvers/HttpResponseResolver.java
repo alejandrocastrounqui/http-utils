@@ -14,7 +14,7 @@ class HttpResponseResolver extends CompositeResolver<HttpMessage> implements Htt
 	static List<ResolverCommand<HttpMessage>> commands = Arrays.asList(
  		new ResolverCommand<HttpMessage>(
 			"(?)header", 
-			c -> c.getHeader(),
+			c -> c.getHeaders(),
 			d -> new HttpHeadersResolver(d)
 		),
  		new ResolverCommand<HttpMessage>(

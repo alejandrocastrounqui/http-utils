@@ -11,7 +11,7 @@ import com.jayway.jsonpath.JsonPath;
 
 public class HttpBodyContentResolver implements HttpResolver<HttpMessage>{
 	
-	private Map<String, Function<String, String>> commands = new HashMap<String, Function<String, String>>();
+	private Map<String, Function<String, Object>> commands = new HashMap<String, Function<String, Object>>();
 	
 	public HttpBodyContentResolver(String descriptor) {
 		if("".equals(descriptor )) {

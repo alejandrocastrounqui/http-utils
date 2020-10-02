@@ -14,7 +14,7 @@ class HttpRequestResolver extends CompositeResolver<HttpRequest> implements Http
 	static List<ResolverCommand<HttpRequest>> commands = Arrays.asList(
  		new ResolverCommand<HttpRequest>(
 			"(?)header", 
-			c -> c.getHeader(),
+			c -> c.getHeaders(),
 			d -> new HttpHeadersResolver(d)
 		),
  		new ResolverCommand<HttpRequest>(

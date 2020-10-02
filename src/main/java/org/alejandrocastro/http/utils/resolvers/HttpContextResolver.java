@@ -7,6 +7,7 @@ import org.alejandrocastro.http.utils.commons.HttpResolver;
 import org.alejandrocastro.http.utils.commons.ResolverCommand;
 import org.alejandrocastro.http.utils.context.HttpContext;
 
+
 public class HttpContextResolver extends CompositeResolver<HttpContext> implements HttpResolver<HttpContext>{
 		
 	//TODO: add empty token command
@@ -23,6 +24,9 @@ public class HttpContextResolver extends CompositeResolver<HttpContext> implemen
 		)
 //		new RootCommand("(?)auth", (despriptor)=>{})
 	);
+	
+
+	
 
 	public HttpContextResolver(String despriptor) {
 		super(despriptor);

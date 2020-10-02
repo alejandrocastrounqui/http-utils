@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface HttpMessage {
 	
-	Map<String, List<String>> getHeader();
+	Map<String, List<String>> getHeaders();
 	
 	ContentType getContentType();
 	
