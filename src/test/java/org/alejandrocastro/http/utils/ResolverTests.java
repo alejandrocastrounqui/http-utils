@@ -2,11 +2,9 @@ package org.alejandrocastro.http.utils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.hasKey;
-
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -16,6 +14,7 @@ import org.alejandrocastro.http.utils.context.ContentType;
 import org.alejandrocastro.http.utils.context.HttpContext;
 import org.alejandrocastro.http.utils.context.HttpContextImpl;
 import org.alejandrocastro.http.utils.resolvers.HttpContextResolver;
+import org.alejandrocastro.http.utils.result.Result;
 import org.junit.jupiter.api.Test;
 
 import com.jayway.jsonpath.PathNotFoundException;
@@ -70,67 +69,68 @@ class ResolverTests {
 	@Test
 	void resolveResponseJsonBodyContentAttribute() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.simple_value_key");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, equalTo("value1"));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentArrayIntegerItemByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items[0].value");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, equalTo(1));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentArrayIntegerItemTypeByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items[0].value");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, instanceOf(Integer.class));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentArrayStringItemByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items[1].value");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, equalTo("text"));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentArrayStringItemTypeByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items[1].value");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, instanceOf(String.class));
 	}
 		
 	@Test
 	void resolveResponseJsonBodyContentJsonArrayByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items");
-		Object result = httpContextResolver.resolve(httpContext);
-		assertThat(result, instanceOf(List.class));
-		if(result instanceof JSONArray) {
-			JSONArray actual = (JSONArray) result;
-			assertThat(actual, hasSize(3));		
+		Result result = httpContextResolver.resolve(httpContext);
+		Object actual = result.getValue();
+		assertThat(actual, instanceOf(List.class));
+		if(actual instanceof JSONArray) {
+			JSONArray actualJson = (JSONArray) actual;
+			assertThat(actualJson, hasSize(3));		
 		}
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentJsonArrayTypeByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, instanceOf(List.class));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentJsonArrayJsonTypeByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.items");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, instanceOf(JSONArray.class));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentJsonMapByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.map_value_key");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, instanceOf(Map.class));
 		if(result instanceof JSONObject) {
 			JSONObject actual = (JSONObject) result;
@@ -141,15 +141,15 @@ class ResolverTests {
 	@Test
 	void resolveResponseJsonBodyContentJsonMapTypeByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.map_value_key");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).getValue();
 		assertThat(result, instanceOf(Map.class));
 	}
 	
 	@Test
 	void resolveResponseJsonBodyContentJsonMapJsonTypeByIndex() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("response.body.map_value_key");
-		Object result = httpContextResolver.resolve(httpContext);
-		assertThat(result, instanceOf(JSONObject.class));
+		Object result = httpContextResolver.resolve(httpContext).getValue();
+		assertThat(result, instanceOf(Map.class));
 	}
 	
 	@Test
@@ -163,7 +163,7 @@ class ResolverTests {
 	@Test
 	void resolveResponseRawJsonBody() {
 		HttpContextResolver httpContextResolver = new HttpContextResolver("request.body");
-		Object result = httpContextResolver.resolve(httpContext);
+		Object result = httpContextResolver.resolve(httpContext).toString();
 		assertThat(result, equalTo(REQUEST_BODY));
 	}
 	

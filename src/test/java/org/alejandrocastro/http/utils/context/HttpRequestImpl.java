@@ -1,13 +1,12 @@
 package org.alejandrocastro.http.utils.context;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HttpRequestImpl implements HttpRequest{
 
-	private Map<String, List<String>> headers;
+	private Map<String, String> headers;
 	private ContentType contentType;
 	private String bodyContent;
 	private Map<String, List<String>> queryParams;
@@ -23,7 +22,7 @@ public class HttpRequestImpl implements HttpRequest{
 		this.uri = builder.uri;
 	}
 	
-	public HttpRequestImpl(Map<String, List<String>> header, ContentType contentType, String bodyContent) {
+	public HttpRequestImpl(Map<String, String> header, ContentType contentType, String bodyContent) {
 		super();
 		this.headers = header;
 		this.contentType = contentType;
@@ -31,7 +30,7 @@ public class HttpRequestImpl implements HttpRequest{
 	}
 
 	@Override
-	public Map<String, List<String>> getHeaders() {
+	public Map<String, String> getHeaders() {
 		return headers;
 	}
 
@@ -65,7 +64,7 @@ public class HttpRequestImpl implements HttpRequest{
 	}
 
 	public static class Builder{
-		private Map<String, List<String>> headers = new HashMap<String, List<String>>();
+		private Map<String, String> headers = new HashMap<String, String>();
 		private ContentType contentType;
 		private String bodyContent;
 		private Map<String, List<String>> queryParams = new HashMap<String, List<String>>();
@@ -86,18 +85,13 @@ public class HttpRequestImpl implements HttpRequest{
 			return httpContextBuilder;
 		}
 
-		public Builder withHeaders(Map<String, List<String>> header) {
+		public Builder withHeaders(Map<String, String> header) {
 			this.headers = header;
 			return this;
 		}
 
-		public Builder withHeader(String key, List<String> values) {
-			this.headers.put(key, values);
-			return this;
-		}
-		
 		public Builder withHeader(String key, String values) {
-			this.headers.put(key, Collections.singletonList(values));
+			this.headers.put(key, values);
 			return this;
 		}
 

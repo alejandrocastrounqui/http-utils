@@ -1,12 +1,11 @@
 package org.alejandrocastro.http.utils.context;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class HttpMessageImpl implements HttpMessage{
 
-	private Map<String, List<String>> headers;
+	private Map<String, String> headers;
 	private ContentType contentType;
 	private String bodyContent;
 
@@ -17,18 +16,18 @@ public class HttpMessageImpl implements HttpMessage{
 	}
 	
 	public HttpMessageImpl(
-		Map<String, List<String>> header, 
+		Map<String, String> headers, 
 		ContentType contentType, 
 		String bodyContent
 	) {
 		super();
-		this.headers = header;
+		this.headers = headers;
 		this.contentType = contentType;
 		this.bodyContent = bodyContent;
 	}
 	
 	@Override
-	public Map<String, List<String>> getHeaders() {
+	public Map<String, String> getHeaders() {
 		return headers;
 	}
 
@@ -47,7 +46,7 @@ public class HttpMessageImpl implements HttpMessage{
 	}
 
 	public static class Builder {
-		private Map<String, List<String>> headers = new HashMap<String, List<String>>();
+		private Map<String, String> headers = new HashMap<String, String>();
 		private ContentType contentType;
 		private String bodyContent;
 		HttpContextImpl.Builder httpContextBuilder;
@@ -65,12 +64,12 @@ public class HttpMessageImpl implements HttpMessage{
 			return httpContextBuilder;
 		}
 
-		public Builder withHeaders(Map<String, List<String>> header) {
+		public Builder withHeaders(Map<String, String> header) {
 			this.headers = header;
 			return this;
 		}
 
-		public Builder withHeader(String key, List<String> values) {
+		public Builder withHeader(String key, String values) {
 			this.headers.put(key, values);
 			return this;
 		}

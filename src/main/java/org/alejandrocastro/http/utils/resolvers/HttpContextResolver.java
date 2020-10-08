@@ -25,9 +25,6 @@ public class HttpContextResolver extends CompositeResolver<HttpContext> implemen
 //		new RootCommand("(?)auth", (despriptor)=>{})
 	);
 	
-
-	
-
 	public HttpContextResolver(String despriptor) {
 		super(despriptor);
 	}

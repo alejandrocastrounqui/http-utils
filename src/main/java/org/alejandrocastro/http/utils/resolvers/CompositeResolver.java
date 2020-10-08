@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.alejandrocastro.http.utils.commons.HttpResolver;
 import org.alejandrocastro.http.utils.commons.ResolverCommand;
+import org.alejandrocastro.http.utils.result.Result;
 
 public abstract class CompositeResolver<T> {
 	
@@ -35,7 +36,7 @@ public abstract class CompositeResolver<T> {
 		throw new IllegalArgumentException("cannot parse descriptor");
 	}
 
-	public Object resolve(T source) {
+	public Result resolve(T source) {
 		return delegate.resolve(source);
 	}
 	
